@@ -1,7 +1,6 @@
 import random
 from game.card import Card
 
-
 class Deck:
 
     SUITS = ["Hearts", "Diamonds", "Clubs", "Spades"]
