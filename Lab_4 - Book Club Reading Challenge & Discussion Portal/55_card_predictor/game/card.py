@@ -1,6 +1,5 @@
 import pygame
 
-
 class Card:
 
     def __init__(self, rank_str, suit_str, numeric_rank):
