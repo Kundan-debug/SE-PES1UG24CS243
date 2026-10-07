@@ -4,7 +4,6 @@ from game.game_engine import GameEngine
 WIDTH, HEIGHT = 650, 440
 FPS = 60
 
-
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -27,7 +26,6 @@ def main():
         clock.tick(FPS)
 
     pygame.quit()
-
 
 if __name__ == "__main__":
     main()
