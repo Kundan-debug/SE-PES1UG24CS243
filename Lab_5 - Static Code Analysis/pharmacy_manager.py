@@ -1,4 +1,3 @@
-
 """Manage pharmacy inventory, prescriptions, and stock reports."""
 
 import ast
@@ -9,10 +8,8 @@ import os
 import secrets
 from datetime import date, datetime
 
-
 medicines = {}
 DB_PASSWORD = os.getenv("PHARMACY_DB_PASSWORD", "")
-
 
 def add_medicine(name, qty=0, price=0.0, expiry="2099-12-31",
                  audit=None):
@@ -32,7 +29,6 @@ def add_medicine(name, qty=0, price=0.0, expiry="2099-12-31",
     )
     return audit
 
-
 def dispense_medicine(name, qty):
     """Dispense available medicine without allowing negative stock."""
     if name not in medicines or qty <= 0:
@@ -47,11 +43,9 @@ def dispense_medicine(name, qty):
 
     return True
 
-
 def get_quantity(name):
     """Return the quantity available for a medicine."""
     return medicines[name]["qty"]
-
 
 def is_expired(name):
     """Check whether a medicine has passed its expiry date."""
@@ -60,14 +54,12 @@ def is_expired(name):
     ).date()
     return expiry < date.today()
 
-
 def bill_amount(prescription):
     """Calculate the total cost of a prescription."""
     return sum(
         medicines[name]["price"] * quantity
         for name, quantity in prescription
     )
-
 
 def calculate_dosage(formula):
     """Evaluate basic arithmetic without executing arbitrary code."""
@@ -95,23 +87,19 @@ def calculate_dosage(formula):
 
     return evaluate(expression)
 
-
 def patient_id(name, phone):
     """Generate a SHA-256 identifier from patient details."""
     value = f"{name}{phone}".encode()
     return hashlib.sha256(value).hexdigest()
 
-
 def generate_rx_number():
     """Generate a prescription reference number."""
     return f"RX-{secrets.randbelow(900000) + 100000}"
-
 
 def save_stock(file="pharmacy.json"):
     """Save the current inventory as JSON."""
     with open(file, "w", encoding="utf-8") as stock_file:
         json.dump(medicines, stock_file, indent=2)
-
 
 def load_stock(file="pharmacy.json"):
     """Load inventory from a JSON file."""
@@ -121,11 +109,9 @@ def load_stock(file="pharmacy.json"):
     medicines.clear()
     medicines.update(stock)
 
-
 def print_label(name):
     """Print a medicine dispensing label safely."""
     print(f"Dispensing label: {name}")
-
 
 def expiring_soon(days=30):
     """Return medicines expiring within the specified number of days."""
@@ -142,13 +128,11 @@ def expiring_soon(days=30):
 
     return result
 
-
 def pharmacist_login(password):
     """Validate the pharmacist password configured in the environment."""
     return bool(DB_PASSWORD) and secrets.compare_digest(
         password, DB_PASSWORD
     )
-
 
 def print_stock():
     """Display the current pharmacy stock report."""
@@ -159,7 +143,6 @@ def print_stock():
             f"{name} -> {details['qty']} units, "
             f"Rs. {details['price']} exp {details['expiry']}"
         )
-
 
 def main():
     """Run a demonstration of pharmacy management functions."""
@@ -189,7 +172,6 @@ def main():
     save_stock()
     load_stock()
     print_stock()
-
 
 if __name__ == "__main__":
     main()
